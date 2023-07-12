@@ -26,7 +26,6 @@ public class Player : MonoBehaviour {
     private float _nextShoot;
     private bool _startShoot;
     private Vector2 _shootDirection;
-    private KeyCode _lastShootInput;
 
     private void Start() {
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -37,30 +36,13 @@ public class Player : MonoBehaviour {
         _moveDirection.x = (Input.GetKey(KeyCode.D) ? 1 : 0) - (Input.GetKey(KeyCode.A) ? 1 : 0);
         _moveDirection.y = (Input.GetKey(KeyCode.W) ? 1 : 0) - (Input.GetKey(KeyCode.S) ? 1 : 0);
 
+        _shootDirection.x = (Input.GetKey(KeyCode.RightArrow) ? 1 : 0) - (Input.GetKey(KeyCode.LeftArrow) ? 1 : 0);
+        _shootDirection.y = (Input.GetKey(KeyCode.UpArrow) ? 1 : 0) - (Input.GetKey(KeyCode.DownArrow) ? 1 : 0);
+
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextRoll && _moveDirection != Vector2.zero) {
             _startRoll = true;
             _rollDirection = _moveDirection;
             _nextRoll = Time.time + RollCooldown;
-        }
-
-        // Looks a bit overcomplicated but this logic is to ensure proper response to a new shoot
-        // key being pressed. I.e. the new key should override the previous key even if the
-        // previous key is still held
-        foreach (KeyCode shootDirection in ShootDirections) {
-            if (Input.GetKeyDown(shootDirection)) {
-                _lastShootInput = shootDirection;
-            }
-        }
-
-        if (_lastShootInput != KeyCode.None) {
-            if (Input.GetKey(_lastShootInput)) {
-                _shootDirection.x = (_lastShootInput == KeyCode.RightArrow ? 1 : 0) -
-                    (_lastShootInput == KeyCode.LeftArrow ? 1 : 0);
-                _shootDirection.y = (_lastShootInput == KeyCode.UpArrow ? 1 : 0) -
-                    (_lastShootInput == KeyCode.DownArrow ? 1 : 0);
-            } else {
-                _shootDirection = Vector2.zero;
-            }
         }
     }
 
