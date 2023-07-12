@@ -98,3 +98,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerBullet: {fileID: 5105688523025855239, guid: 3860aab43a17a25449957f644587abe8, type: 3}
+  RollColor: {r: 0.7924528, g: 0.3303201, b: 0.16073336, a: 1}
+  RollReadyColor: {r: 1, g: 0.7304954, b: 0.21226418, a: 1}
