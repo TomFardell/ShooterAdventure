@@ -11,7 +11,7 @@ public class Player : MonoBehaviour {
     private const float RollCooldown = 1;
     private const float RollDuration = 0.2f;
     private const float RollSpeed = 16;
-    private const float BulletSpeed = 20;
+    private const float BulletSpeed = 25;
     private const float ShootInterval = 0.05f;
     private const float WeaponRecoil = 2;
     private const float RollReadyFlashLength = 0.1f;
