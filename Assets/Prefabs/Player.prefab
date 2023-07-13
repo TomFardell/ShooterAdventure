@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2324997690627850897}
   - component: {fileID: 2959271026419095172}
   - component: {fileID: -2672842283256708202}
-  - component: {fileID: -4304448540440076699}
+  - component: {fileID: 3807972640456598134}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -129,8 +129,8 @@ MonoBehaviour:
   _playerBullet: {fileID: 5105688523025855239, guid: 3860aab43a17a25449957f644587abe8, type: 3}
   RollColor: {r: 0.7924528, g: 0.3303201, b: 0.16073336, a: 1}
   RollReadyColor: {r: 1, g: 0.7304954, b: 0.21226418, a: 1}
---- !u!61 &-4304448540440076699
-BoxCollider2D:
+--- !u!58 &3807972640456598134
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -162,15 +162,5 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Radius: 0.5
