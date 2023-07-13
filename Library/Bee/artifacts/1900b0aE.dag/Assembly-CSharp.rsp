@@ -378,6 +378,7 @@
 "Assets/_Scripts/GameManager.cs"
 "Assets/_Scripts/Player.cs"
 "Assets/_Scripts/PlayspaceWall.cs"
+"Assets/_Scripts/ScoreText.cs"
 "Assets/_Scripts/UnitManager.cs"
 -langversion:9.0
 

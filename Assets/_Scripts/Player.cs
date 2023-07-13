@@ -33,6 +33,8 @@ public class Player : MonoBehaviour {
     private bool _startShoot;
     private Vector2 _shootDirection;
 
+    public int Score { get; set; }
+
     private void Start() {
         _rigidbody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();

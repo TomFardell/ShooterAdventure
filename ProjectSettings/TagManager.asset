@@ -7,6 +7,8 @@ TagManager:
   - PlayerBullet
   - Playspace
   - Enemy
+  - UnitManager
+  - GameManager
   layers:
   - Default
   - TransparentFX

@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitManager : MonoBehaviour {
-    [SerializeField] GameObject _enemy;
-    [SerializeField] GameObject _player;
+    [SerializeField] private GameObject _enemy;
 
     private const float MinEnemySpawnX = -6;
     private const float MaxEnemySpawnX = 6;
@@ -14,9 +13,14 @@ public class UnitManager : MonoBehaviour {
     private const float FirstEnemyTime = 5;
     private const float SpawnDistanceFromPlayer = 2;
 
+    private GameObject _player;
+
     private float _nextEnemy;
 
+    public int EnemyCount { get; private set; }
+
     private void Start() {
+        _player = GameObject.FindWithTag("Player");
         _nextEnemy = FirstEnemyTime;
     }
 
@@ -37,5 +41,10 @@ public class UnitManager : MonoBehaviour {
 
         GameObject enemy = Instantiate(_enemy);
         enemy.transform.position = spawnPosition;
+        EnemyCount++;
+    }
+
+    public void DecrementEnemyCount() {
+        EnemyCount--;
     }
 }

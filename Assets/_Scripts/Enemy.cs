@@ -7,11 +7,13 @@ public class Enemy : MonoBehaviour {
     private const float MoveSpeed = 2;
 
     private Rigidbody2D _rigidbody;
-    private GameObject _player;
+    private Player _player;
+    private UnitManager _unitManager;
 
     private void Start() {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _player = GameObject.FindWithTag("Player");
+        _player = FindObjectOfType<Player>();
+        _unitManager = FindObjectOfType<UnitManager>();
     }
 
     private void FixedUpdate() {
@@ -23,6 +25,8 @@ public class Enemy : MonoBehaviour {
         if (other.gameObject.tag == "PlayerBullet") {
             Destroy(this.gameObject);
             Destroy(other.gameObject);
+            _unitManager.DecrementEnemyCount();
+            _player.Score++;
         }
     }
 }
