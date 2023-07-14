@@ -3,24 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
-    [SerializeField] private GameObject _playerBullet;
-    [SerializeField] private Color RollColor;
-    [SerializeField] private Color RollReadyColor;
+    public static int Score { get; set; }
 
-    private const float MoveSpeed = 8;
-    private const float RollCooldown = 1;
-    private const float RollDuration = 0.2f;
-    private const float RollSpeed = 16;
-    private const float BulletSpeed = 25;
-    private const float ShootInterval = 0.05f;
-    private const float WeaponRecoil = 2;
+    public PlayerData Data { get; private set; }
+    public int CurrentHealth { get; private set; }
+
     private const float RollReadyFlashLength = 0.1f;
 
-    private readonly KeyCode[] ShootDirections = { KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow };
+    private static readonly KeyCode[] ShootDirections = { KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow };
+
+    [SerializeField] private GameObject _playerBullet;
+    [SerializeField] private ScriptablePlayer _scriptable;
 
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _spriteRenderer;
-    private Color _defaultColor;
 
     private Vector2 _moveDirection;
 
@@ -33,14 +29,22 @@ public class Player : MonoBehaviour {
     private bool _startShoot;
     private Vector2 _shootDirection;
 
-    public int Score { get; set; }
+    private float _lastDamage;
+
+    private bool IsInvincible {
+        get => (Time.time < _lastDamage + Data.TimeInvincibleAfterHit || _rollUpdatesRemaining > 0);
+    }
 
     private void Start() {
+        Data = _scriptable.Data;
+
         _rigidbody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
-        _defaultColor = _spriteRenderer.color;
-        _nextRoll = -RollCooldown;
+        CurrentHealth = Data.MaxHealth;
+        _nextRoll = -Data.RollCooldown;
+        _lastDamage = -Data.TimeInvincibleAfterHit;
+        _spriteRenderer.color = Data.DefaultColor;
     }
 
     private void Update() {
@@ -53,41 +57,54 @@ public class Player : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextRoll && _moveDirection != Vector2.zero) {
             _startRoll = true;
             _rollDirection = _moveDirection;
-            _nextRoll = Time.time + RollCooldown;
+            _nextRoll = Time.time + Data.RollCooldown;
         }
+
+        _spriteRenderer.color = GetColor();
     }
 
     private void FixedUpdate() {
         // Weapon recoil is applied only to speed up the player. The dot product means firing
         // diagonally behind is less effective than firing directly behind
-        _rigidbody.velocity = MoveSpeed * _moveDirection.normalized -
-            Mathf.Min(WeaponRecoil * Vector2.Dot(_shootDirection.normalized, _moveDirection.normalized), 0) * _moveDirection.normalized;
+        _rigidbody.velocity = Data.MoveSpeed * _moveDirection.normalized -
+            Mathf.Min(Data.WeaponRecoil * Vector2.Dot(_shootDirection.normalized, _moveDirection.normalized), 0) * _moveDirection.normalized;
 
         if (_startRoll) {
             // 50 is the number of FixedUpdates per second
-            _rollUpdatesRemaining = (int)(RollDuration * 50);
-            _spriteRenderer.color = RollColor;
+            _rollUpdatesRemaining = (int)(Data.RollDuration * 50);
             _startRoll = false;
         }
 
         if (_rollUpdatesRemaining > 0) {
-            _rigidbody.velocity = RollSpeed * _rollDirection.normalized;
+            _rigidbody.velocity = Data.RollSpeed * _rollDirection.normalized;
             _rollUpdatesRemaining--;
-        } else {
-            if (Time.time > _nextRoll && Time.time < _nextRoll + RollReadyFlashLength) {
-                _spriteRenderer.color = RollReadyColor;
-            } else {
-                _spriteRenderer.color = _defaultColor;
-            }
         }
 
-        if (Time.time > _nextShoot)
+        if (Time.time > _nextShoot) {
             if (_shootDirection != Vector2.zero) {
                 GameObject bullet = Instantiate(_playerBullet);
                 // The z component ensures bullets appear behind the player
                 bullet.transform.position = new Vector3(transform.position.x, transform.position.y, 1);
-                bullet.GetComponent<Rigidbody2D>().velocity = BulletSpeed * _shootDirection.normalized;
-                _nextShoot = Time.time + ShootInterval;
+                bullet.GetComponent<Rigidbody2D>().velocity = Data.BulletSpeed * _shootDirection.normalized;
+                _nextShoot = Time.time + Data.ShootInterval;
             }
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D other) {
+        if (other.gameObject.tag == "Enemy" && !IsInvincible) {
+            CurrentHealth -= other.gameObject.GetComponent<Enemy>().Data.Damage;
+            _lastDamage = Time.time;
+        }
+    }
+
+    private Color GetColor() {
+        if (_rollUpdatesRemaining > 0)
+            return Data.RollColor;
+        if (IsInvincible)
+            return Data.InvincibleColor;
+        if (Time.time > _nextRoll && Time.time < _nextRoll + RollReadyFlashLength)
+            return Data.RollReadyColor;
+        return Data.DefaultColor;
     }
 }

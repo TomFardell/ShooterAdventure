@@ -376,9 +376,12 @@
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.3.4f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/_Scripts/Enemy.cs"
 "Assets/_Scripts/GameManager.cs"
+"Assets/_Scripts/HealthText.cs"
 "Assets/_Scripts/Player.cs"
 "Assets/_Scripts/PlayspaceWall.cs"
 "Assets/_Scripts/ScoreText.cs"
+"Assets/_Scripts/Scriptables/ScriptableEnemy.cs"
+"Assets/_Scripts/Scriptables/ScriptablePlayer.cs"
 "Assets/_Scripts/UnitManager.cs"
 -langversion:9.0
 

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c7e8d21da40c594d80236487262f65a, type: 3}
+  m_Name: Player
+  m_EditorClassIdentifier: 
+  _data:
+    MoveSpeed: 8
+    RollCooldown: 1
+    RollDuration: 0.25
+    RollSpeed: 16
+    BulletSpeed: 20
+    BulletDamage: 1
+    ShootInterval: 0.15
+    WeaponRecoil: 2
+    MaxHealth: 3
+    TimeInvincibleAfterHit: 1
+    DefaultColor: {r: 0.9433962, g: 0.5884989, b: 0.22694907, a: 1}
+    RollColor: {r: 0.7264151, g: 0.2835173, b: 0.14733891, a: 1}
+    RollReadyColor: {r: 1, g: 0.7799565, b: 0.2216981, a: 1}
+    InvincibleColor: {r: 1, g: 0.9306404, b: 0.5613208, a: 1}

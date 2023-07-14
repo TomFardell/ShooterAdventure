@@ -44,8 +44,11 @@
      <Compile Include="Assets\_Scripts\PlayspaceWall.cs" />
      <Compile Include="Assets\_Scripts\ScoreText.cs" />
      <Compile Include="Assets\_Scripts\Enemy.cs" />
+     <Compile Include="Assets\_Scripts\Scriptables\ScriptablePlayer.cs" />
      <Compile Include="Assets\_Scripts\Player.cs" />
      <Compile Include="Assets\_Scripts\UnitManager.cs" />
+     <Compile Include="Assets\_Scripts\Scriptables\ScriptableEnemy.cs" />
+     <Compile Include="Assets\_Scripts\HealthText.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.4f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
